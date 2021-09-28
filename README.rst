@@ -8,4 +8,4 @@ PytolaFC! CartolaFC as Python
 
 **pytolafc** is a Pytonic way to get CartolaFC data ! 
 
-**CartolaFC** is a footbal fantasy game based on the Brazilian National Chamionship `Brasileirão Wikipédia <https://pt.wikipedia.org/wiki/Campeonato_Brasileiro_de_Futebol>`_ 
+**CartolaFC** is a football fantasy game based on the Brazilian National Championship `Brasileirão Wikipédia <https://pt.wikipedia.org/wiki/Campeonato_Brasileiro_de_Futebol>`_ 
