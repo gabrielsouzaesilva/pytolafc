@@ -1,4 +1,4 @@
-PytolaFC! CartolaFC as Python
+Pytola FC! Cartola FC as Python
 =====================================
 
 .. image:: https://img.shields.io/badge/python-3.4+-blue.svg?style=flat
@@ -6,6 +6,8 @@ PytolaFC! CartolaFC as Python
     
 \
 
-**pytolafc** is a Pytonic way to get CartolaFC data ! 
+**pytolafc** is a Pytonic way to get Cartola FC data ! 
 
-**CartolaFC** is a football fantasy game based on the Brazilian National Championship `Brasileirão Wikipédia <https://pt.wikipedia.org/wiki/Campeonato_Brasileiro_de_Futebol>`_ 
+**Cartola FC** is a football fantasy game based on the Brazilian National Championship `Brasileirão Wikipédia <https://pt.wikipedia.org/wiki/Campeonato_Brasileiro_de_Futebol>`_ 
+ 
+⚽⚽ `Cartola FC website <https://ge.globo.com/cartola-fc/>`_ ⚽⚽ 
