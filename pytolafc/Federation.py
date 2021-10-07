@@ -11,6 +11,7 @@ class Federation():
         self._rounds_url = self._cartola_base_url + "rodadas"
         self._matches_url = self._cartola_base_url + "partidas"
         self._players_url = self._cartola_base_url + "atletas/mercado"
+        self._player_status_url = self._cartola_base_url + "atletas/status"
         self._clubs_url = self._cartola_base_url + "clubes"
 
     def request_api_data(sefl, endpoint:str=None):
@@ -133,4 +134,28 @@ class Federation():
             Dictionary containing the players data
         '''
         return self.request_api_data(self._players_url)
-        
+
+    def get_clubs(self):
+        '''
+        Get Football clubs data
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        dict
+            Dictionary containing the Football clubs data
+        '''
+        return self.request_api_data(self._clubs_url)
+
+    def _players_status(self):
+        '''
+        Get default player status used by Cartola
+
+        Returns
+        -------
+        dict
+            Dictionary containing the players status data
+        '''
+        return self.request_api_data(self._player_status_url)
