@@ -12,7 +12,10 @@ class Federation():
         self._matches_url = self._cartola_base_url + "partidas"
         self._players_url = self._cartola_base_url + "atletas/mercado"
         self._player_status_url = self._cartola_base_url + "atletas/status"
-        self._clubs_url = self._cartola_base_url + "clubes"
+        self._clubs_url = self._cartola_base_url + "clubes/mercado"
+        self._round_partial_url = self._cartola_base_url + "atletas/pontuados" # Actual round patial scouts per player
+
+        self._players_df = None
 
     def request_api_data(sefl, endpoint:str=None):
         '''
@@ -121,6 +124,20 @@ class Federation():
         else:
             return self.request_api_data(self._matches_url)
 
+    def get_round_partial(self):
+        '''
+        Get current round partial points per player
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        dict
+            Dictionary with partial data
+        '''
+        return self.request_api_data(self._round_partial_url)
+
     def get_players(self):
         '''
         Get Cartola players
@@ -134,6 +151,44 @@ class Federation():
             Dictionary containing the players data
         '''
         return self.request_api_data(self._players_url)
+
+    def _get_players_dataframe(self):
+        '''
+        Get players info and organize as a DataFrame
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        pd.DataFrame
+            Players info organized in a DataFrame
+        '''
+        if (self._players_df is None):
+            players_info = self.get_players()
+            players_df = pd.DataFrame(players_info['atletas'])
+            self._players_df = players_df
+        
+        return (self._players_df)
+
+    def top_expensive_players(self, top_n=5):
+        '''
+        Get the most expensive top_n players
+
+        Parameters
+        ----------
+        top_n : int
+            Number of most expensive players
+
+        Returns
+        -------
+        pd.DataFrame
+            Data frame with informationa about the top N most expensive players
+        '''
+        if (self._players_df is None):
+            self._players_df = self._get_players_dataframe()
+
+        return (self._players_df.sort_values('preco_num')[-top_n:])
 
     def get_clubs(self):
         '''
