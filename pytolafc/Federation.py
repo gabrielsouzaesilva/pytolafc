@@ -138,6 +138,7 @@ class Federation():
         '''
         return self.request_api_data(self._round_partial_url)
 
+    # Players requests
     def get_players(self):
         '''
         Get Cartola players
@@ -168,6 +169,13 @@ class Federation():
             players_info = self.get_players()
             players_df = pd.DataFrame(players_info['atletas'])
             self._players_df = players_df
+
+        # Transform scouts into table
+        players_scouts = pd.DataFrame(self._players_df['scout'].tolist())
+        players_scouts = players_scouts.fillna(0)
+
+        # Add scouts as columns in data
+        self._players_df = pd.concat([players_scouts, self._players_df], axis=1)
         
         return (self._players_df)
 
@@ -188,8 +196,59 @@ class Federation():
         if (self._players_df is None):
             self._players_df = self._get_players_dataframe()
 
-        return (self._players_df.sort_values('preco_num')[-top_n:])
+        return (self._players_df.nlargest(top_n, 'preco_num'))
 
+    def get_scout_rank(self, scout:str):
+        '''
+        Get a rank of based on players goals in the championship
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        pd.DataFrame
+            
+        '''
+        if not (isinstance(scout, str)):
+            raise Exception(f"Scout should be a string, not a {type(scout)} !")
+
+        if (self._players_df is None):
+            self._players_df = self._get_players_dataframe()
+
+        return (self._players_df.sort_values(by=scout, ascending=False))
+
+    def get_top_assists(self):
+        '''
+        TBD
+        '''
+        return self.get_scout_rank("A")
+
+    def get_players_global_scouts(self):
+        '''
+        Get global scouts data per player
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with player info and 
+        '''
+        
+
+    def _players_status(self):
+        '''
+        Get default player status used by Cartola
+
+        Returns
+        -------
+        dict
+            Dictionary containing the players status data
+        '''
+        return self.request_api_data(self._player_status_url)
+    
     def get_clubs(self):
         '''
         Get Football clubs data
@@ -203,14 +262,3 @@ class Federation():
             Dictionary containing the Football clubs data
         '''
         return self.request_api_data(self._clubs_url)
-
-    def _players_status(self):
-        '''
-        Get default player status used by Cartola
-
-        Returns
-        -------
-        dict
-            Dictionary containing the players status data
-        '''
-        return self.request_api_data(self._player_status_url)
